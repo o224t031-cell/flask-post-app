@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>編集エリア</title>
+</head>
+<body>
+  <h1>編集エリア</h1>
+  <form action="{{ url_for('update', id=post.id) }}" method="post" enctype="multipart/form-data">
+    <label>名前：
+      <input type="text" name="myname" value="{{ post.myname }}">
+    </label><br><br>
+
+    <label>メール：
+      <input type="email" name="email" value="{{ post.email }}">
+    </label><br><br>
+
+    <label>本文：
+      <textarea name="message">{{ post.message_main }}</textarea>
+    </label><br><br>
+
+    {% if post.image %}
+      <p>現在の画像：</p>
+      <img src="{{ url_for('static', filename='uploads/' + post.image) }}" width="200"><br>
+    {% endif %}
+
+    <label>変更：
+      <input type="file" name="image">
+    </label><br><br>
+
+    <button type="submit">更新ボタン</button>
+  </form>
+
+  <a href="{{ url_for('index') }}">戻る</a>
+</body>
+</html>
+
+

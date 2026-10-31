@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>投稿一覧</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container"> 
+
+<h1>掲示板</h1>
+
+<form method="POST">
+    <p>
+        ユーザーネーム<br>
+        <input type="text" name="username" required>
+    </p>
+
+    <p>
+        メールアドレス<br>
+        <input type="email" name="email" required>
+    </p>
+
+    <p>
+        メッセージ<br>
+        <textarea name="message" rows="5" cols="40" required></textarea>
+    </p>
+
+    <p>
+        <button type="submit">投稿</button>
+    </p>
+</form>
+
+<hr>
+
+<h2>投稿一覧</h2>
+
+{% for post in posts %}
+    <div style="margin-bottom: 20px;">
+        <p><strong>名前：</strong>{{ post.myname }}</p>
+        <p><strong>メール：</strong>{{ post.email }}</p>
+        <p><strong>内容：</strong>{{ post.message_main }}</p>
+        <p><small>投稿日：{{ post.created_at }}</small></p>
+    </div>
+    <hr>
+{% endfor %}
+
+</div>  
+
+</body>
+</html>
+

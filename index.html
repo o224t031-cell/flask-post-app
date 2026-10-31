@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>掲示板</title>
+</head>
+<body>
+
+<h1>掲示板</h1>
+
+<form method="GET">
+    <input type="text" name="keyword" value="{{ keyword }}" placeholder="名前・メッセージで検索">
+    <button type="submit">検索</button>
+</form>
+
+<hr>
+
+<form method="POST" enctype="multipart/form-data">
+    <p>
+        名前<br>
+        <input type="text" name="myname" required>
+    </p>
+
+    <p>
+        メール<br>
+        <input type="email" name="email" required>
+    </p>
+
+    <p>
+        メッセージ<br>
+        <textarea name="message" required></textarea>
+    </p>
+
+    <p>
+        画像<br>
+        <input type="file" name="image">
+    </p>
+
+    <button type="submit">投稿</button>
+</form>
+
+<hr>
+
+<h2>投稿一覧</h2>
+
+{% for post in posts %}
+<div style="border:1px solid #FFFFFF; padding:10px; margin-bottom:15px;">
+    <p><strong>名前：</strong>{{ post.myname }}</p>
+    <p><strong>内容：</strong>{{ post.message_main }}</p>
+
+    {% if post.image %}
+        <img src="{{ url_for('static', filename='uploads/' ~ post.image) }}" width="200">
+    {% endif %}
+
+    <p>ナイス：{{ post.likes }}</p>
+
+    
+    <form method="POST" action="{{ url_for('like', id=post.id) }}">
+        <button type="submit">いいね！</button>
+    </form>
+
+    <a href="{{ url_for('edit', id=post.id) }}">編集</a> |
+    <a href="{{ url_for('delete', id=post.id) }}">削除</a>
+
+    <p style="font-size:12px; color:blueviolet;">
+        投稿日時：{{ post.created_at }}
+    </p>
+</div>
+{% endfor %}
+
+</body>
+</html>
